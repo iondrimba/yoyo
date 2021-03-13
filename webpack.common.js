@@ -3,6 +3,7 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { ESBuildPlugin } = require('esbuild-loader');
 
 module.exports = {
   entry: {
@@ -22,8 +23,9 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
+        loader: 'esbuild-loader',
+        options: {
+          target: 'es2017'
         }
       }
     ]
@@ -50,5 +52,6 @@ module.exports = {
       filename: 'index.html',
       template: 'src/index.html'
     }),
+    new ESBuildPlugin(),
   ]
 };
